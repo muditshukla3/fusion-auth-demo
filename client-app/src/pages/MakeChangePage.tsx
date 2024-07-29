@@ -28,10 +28,28 @@ export default function MakeChangePage() {
     e.stopPropagation();
     e.preventDefault();
 
-    const total = amount;
-    const nickels = Math.floor(amount / 0.05);
-    const pennies = Math.round((amount - nickels * 0.05) * 100);
-    setChange({ total, nickels, pennies });
+    fetch('http://localhost:8080/make-change?total='+amount, {
+      method: 'GET', // or 'GET'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include', // This will include cookies in the request
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      // Create a new Change object
+      let change: Change = {
+        total: data.total,
+        nickels: data.nickels,
+        pennies: data.pennies,
+      };
+
+      setChange(change);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
   };
 
   if (!isLoggedIn || isFetchingUserInfo) {

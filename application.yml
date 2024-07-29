@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ${FUSION_REST_APP_IMAGE}:1
+    ports:
+      - "8080:8080"
+    networks:
+      - fusion-auth-demo_search_net
+
+  frontend:
+    image: ${FUSION_REACT_APP_IMAGE}:1
+    ports:
+      - "3000:3000"
+    networks:
+      - fusion-auth-demo_search_net

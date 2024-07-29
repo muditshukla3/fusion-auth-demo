@@ -15,7 +15,13 @@
     "adminPassword": "password",
     "userEmail": "richard@example.com",
     "userPassword": "password",
-    "userUserId": "00000000-0000-0000-0000-111111111111"
+    "userUserId": "00000000-0000-0000-0000-111111111111",
+    "tellerEmail": "teller@example.com",
+    "tellerPassword": "password",
+    "tellerUserId": "00000000-0000-0000-0000-111111111111",
+    "customerEmail": "customer@example.com",
+    "customerPassword": "password",
+    "customerUserId": "00000000-0000-0000-0000-222222222222"
   },
   "apiKeys": [
     {
@@ -106,7 +112,8 @@
             ],
             "debug": true,
             "generateRefreshTokens": true,
-            "requireRegistration": true
+            "requireRegistration": true,
+            "proofKeyForCodeExchangePolicy": "Required"
           },
           "jwtConfiguration": {
             "enabled": true,
@@ -115,7 +122,15 @@
           },
           "registrationConfiguration": {
             "enabled": true
-          }
+          },
+          "roles": [
+            {
+              "name": "teller"
+            },
+            {
+              "name": "customer"
+            }
+          ]
         }
       }
     },
@@ -132,6 +147,46 @@
         },
         "registration": {
           "applicationId": "#{applicationId}"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/user/registration/#{tellerUserId}",
+      "body": {
+        "user": {
+          "birthDate": "1985-11-23",
+          "email": "#{tellerEmail}",
+          "firstName": "Tammy",
+          "lastName": "Teller",
+          "fullName": "Tammy Teller",
+          "password": "#{tellerPassword}"
+        },
+        "registration": {
+          "applicationId": "#{applicationId}",
+          "roles": [
+            "teller"
+          ]
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "url": "/api/user/registration/#{customerUserId}",
+      "body": {
+        "user": {
+          "birthDate": "1985-11-23",
+          "email": "#{customerEmail}",
+          "firstName": "Charlie",
+          "lastName": "Customer",
+          "fullName": "Charlie Customer",
+          "password": "#{customerPassword}"
+        },
+        "registration": {
+          "applicationId": "#{applicationId}",
+          "roles": [
+            "customer"
+          ]
         }
       }
     },

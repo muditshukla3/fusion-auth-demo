@@ -81,6 +81,26 @@ services:
       - fusionauth_config:/usr/local/fusionauth/config
       - ./kickstart:/usr/local/fusionauth/kickstart
 
+  backend:
+    image: ${FUSION_REST_APP_IMAGE}:1
+    depends_on:
+      fusionauth:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    networks:
+      - search_net
+
+  frontend:
+    image: ${FUSION_REACT_APP_IMAGE}:1
+    depends_on:
+      fusionauth:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    networks:
+      - search_net
+
 networks:
   db_net:
     driver: bridge
