@@ -9,7 +9,7 @@ import {
 } from "@fusionauth/react-sdk";
 
 const config: FusionAuthProviderConfig = {
-  clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
+  clientId: "5ba6690b-af1f-4d7e-ac31-23f8b5c4eb8f",
   redirectUri: "http://localhost:3000",
   postLogoutRedirectUri: "http://localhost:3000/logged-out",
   serverUrl: "http://localhost:9011",

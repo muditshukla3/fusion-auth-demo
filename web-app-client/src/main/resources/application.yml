@@ -1,0 +1,35 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          fusionauth:
+            client-id: ${CLIENT_ID}
+            client-secret: ${CLIENT_SECRET}
+            client-name: fusionauth
+            provider: fusionauth
+            client-authentication-method: basic
+            authorization-grant-type: authorization_code
+            scope: email,openid,profile
+            redirectUri: http://localhost:8080/login/oauth2/code/fusionauth
+        provider:
+          fusionauth:
+            authorization-uri: http://localhost:9011/oauth2/authorize
+            token-uri: http://localhost:9011/oauth2/token
+            user-info-uri: http://localhost:9011/oauth2/userinfo?schema=openid
+            jwk-set-uri: http://localhost:9011/.well-known/jwks.json
+            user-name-attribute: preferred_username
+            user-info-authentication-method: header
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+  application:
+    name: FusionAuth Spring Example
+
+fusionauth:
+  logout-url: http://localhost:9011/oauth2/logout?client_id=${spring.security.oauth2.client.registration.fusionauth.client-id}
+logging:
+  level:
+    org.springframework.security: DEBUG
