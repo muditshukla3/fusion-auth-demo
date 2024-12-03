@@ -6,9 +6,6 @@ spring:
           fusionauth:
             client-id: ${CLIENT_ID}
             client-secret: ${CLIENT_SECRET}
-            client-name: fusionauth
-            provider: fusionauth
-            client-authentication-method: basic
             authorization-grant-type: authorization_code
             scope: email,openid,profile
             redirectUri: http://localhost:8080/login/oauth2/code/fusionauth
