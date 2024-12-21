@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.ms.service_app.filter.JwtAuthenticationFilter;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,10 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenResolver;
 import org.springframework.security.oauth2.server.resource.web.DefaultBearerTokenResolver;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.ms.service_app.jwt.CustomJwtAuthenticationConverter;
 
@@ -23,9 +28,11 @@ import jakarta.servlet.http.HttpServletRequest;
 public class SecurityConfig {
 
     private final OAuth2ResourceServerProperties properties;
-
-    public SecurityConfig(OAuth2ResourceServerProperties properties) {
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    public SecurityConfig(OAuth2ResourceServerProperties properties,
+                          JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.properties = properties;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
@@ -53,22 +60,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        List<String> audiences = properties.getJwt().getAudiences();
-        CustomJwtAuthenticationConverter converter = new CustomJwtAuthenticationConverter(audiences);
-
-        return http.authorizeHttpRequests(authz -> authz
-                        .requestMatchers("make-change")
-                            .hasAnyAuthority("customer", "teller")
-                        .requestMatchers("panic")
-                            .hasAuthority("teller"))
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(converter)))
-                .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests
+                                .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        return http.build();
     }
 
-    @Bean
-    public JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withIssuerLocation(properties.getJwt().getIssuerUri()).build();
-    }
+//    @Bean
+//    public JwtDecoder jwtDecoder() {
+//        return NimbusJwtDecoder.withIssuerLocation(properties.getJwt().getIssuerUri()).build();
+//    }
 }

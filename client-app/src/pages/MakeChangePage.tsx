@@ -28,8 +28,8 @@ export default function MakeChangePage() {
     e.stopPropagation();
     e.preventDefault();
 
-    fetch('http://localhost:8080/make-change?total='+amount, {
-      method: 'GET', // or 'GET'
+    fetch('https://ner5y4mdyk.execute-api.us-east-1.amazonaws.com/api/make-change?total='+amount, {
+      method: 'POST', // or 'GET'
       headers: {
         'Content-Type': 'application/json',
       },

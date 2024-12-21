@@ -9,10 +9,10 @@ import {
 } from "@fusionauth/react-sdk";
 
 const config: FusionAuthProviderConfig = {
-  clientId: "e9fdb985-9173-4e01-9d73-ac2d60d1dc8e",
-  redirectUri: "http://localhost:3000",
-  postLogoutRedirectUri: "http://localhost:3000/logged-out",
-  serverUrl: "http://localhost:9011",
+  clientId: "f67b228b-e6ea-4104-831f-7e36da0f53e0",
+  redirectUri: "https://dev-oam.reliant.com",
+  postLogoutRedirectUri: "https://dev-oam.reliant.com/logged-out",
+  serverUrl: "https://dev-auth.reliant.com",
   shouldAutoFetchUserInfo: true,
   shouldAutoRefresh: true,
   onRedirect: (state?: string) => {

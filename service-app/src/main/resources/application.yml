@@ -3,5 +3,19 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:9011
-          audiences: e9fdb985-9173-4e01-9d73-ac2d60d1dc8e
+          #issuer-uri: http://localhost:9011
+          audiences:
+            - 0917028e-de4e-4343-91c8-adcc5d769384
+            - 17a0a168-c71e-481c-be81-e6ab16c7ca1c
+
+server:
+  port: 8081
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+security:
+  jwt:
+    modulasBase64: pwDQDFLesCZdGuRK2WzXVnZsttEMyyiPaC8JR4edmYaJ1su1PvDk1Pp3K__UwGE1rpHUQhqPZCRxo6YPS9_HxTnZGiluwlSWgZSJLALFf6FxDsgU5QNG0CZhW8tF3HmzT9JAHlnAUoUZPKfu-Jcn-V_BrJ6yJLNLE_pE3ZtPyfEAzqrJsCP0r_SyLlH3djqfdgyyKA920jVvV5xRAKse-uToXqYZyICkbDDjqWk0cIVw_ZzQNzLFQrk4zhFBQpg3TM63TsveRJYY1yGYdFAoxKvf4gMQ1VtNn5tnEFAOVd8Zve6Xd7KQ_kEm7lqJTdvkB3-4MI53wbGC4RHivgPAVQ
+    exponentBase64: AQAB
